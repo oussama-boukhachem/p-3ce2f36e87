@@ -1,823 +1,589 @@
 <!DOCTYPE html>
-<html class="staticrypt-html">
-    <head>
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-        <meta charset="utf-8" />
-        <title>Oussama Boukhachem - Portfolio</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate">
+<title>Oussama Boukhachem - DevOps Portfolio</title>
+<meta name="description" content="DevOps portfolio: homelab Kubernetes cluster, RAG and local AI stack, internship work and current DevOps role.">
+<style>
+  :root {
+    --ink: #0f0f0f;
+    --body: #3d3d3d;
+    --muted: #8a8a8a;
+    --line: #e2e2e2;
+    --panel: #fafafa;
+    --bg: #ededed;
+  }
 
-        <!-- do not cache this page -->
-        <meta http-equiv="cache-control" content="max-age=0" />
-        <meta http-equiv="cache-control" content="no-cache" />
-        <meta http-equiv="expires" content="0" />
-        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-        <meta http-equiv="pragma" content="no-cache" />
+  @page { margin: 14mm 15mm; size: A4; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        <style>
-            .staticrypt-hr {
-                margin-top: 20px;
-                margin-bottom: 20px;
-                border: 0;
-                border-top: 1px solid #eee;
-            }
+  html { -webkit-text-size-adjust: 100%; }
 
-            .staticrypt-page {
-                width: 360px;
-                padding: 8% 0 0;
-                margin: auto;
-                box-sizing: border-box;
-            }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--body);
+    font-size: 14px;
+    line-height: 1.62;
+    padding: 34px 14px;
+  }
 
-            .staticrypt-form {
-                position: relative;
-                z-index: 1;
-                background: #ffffff;
-                max-width: 360px;
-                margin: 0 auto 100px;
-                padding: 45px;
-                text-align: center;
-                box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-            }
+  .frame {
+    max-width: 1140px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
 
-            .staticrypt-form input[type="password"],
-            input[type="text"] {
-                background: inherit;
-                border: 0;
-                box-sizing: border-box; /* This ensures padding is included in the total width */
-                font-size: 14px;
-                outline: 0;
-                padding: 15px 30px 15px 15px; /* Adjust the padding to ensure there is space for the icon */
-                width: 100%;
-            }
+  /* ---------------- HEADER ---------------- */
+  .top {
+    padding: 40px 46px 30px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
 
-            .staticrypt-password-container {
-                position: relative;
-                outline: 0;
-                background: #f2f2f2;
-                width: 100%;
-                border: 0;
-                margin: 0 0 15px;
-                box-sizing: border-box;
-            }
+  .top h1 {
+    font-size: 34px;
+    line-height: 1.05;
+    letter-spacing: -0.6px;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
 
-            .staticrypt-toggle-password-visibility {
-                cursor: pointer;
-                height: 20px;
-                opacity: 60%;
-                padding: 13px;
-                position: absolute;
-                right: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 20px;
-            }
+  .top .role {
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
 
-            .staticrypt-form .staticrypt-decrypt-button {
-                text-transform: uppercase;
-                outline: 0;
-                background: #111111;
-                width: 100%;
-                border: 0;
-                padding: 15px;
-                color: #ffffff;
-                font-size: 14px;
-                cursor: pointer;
-            }
+  .top .who { text-align: right; font-size: 13.5px; color: var(--muted); }
+  .top .who strong { display: block; color: var(--ink); font-size: 15px; letter-spacing: .3px; }
+  .top .who a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .top .who a:hover { border-color: var(--ink); }
 
-            .staticrypt-form .staticrypt-decrypt-button:hover,
-            .staticrypt-form .staticrypt-decrypt-button:active,
-            .staticrypt-form .staticrypt-decrypt-button:focus {
-                background: #111111;
-                filter: brightness(92%);
-            }
+  /* ---------------- LAYOUT ---------------- */
+  .body-grid { display: grid; grid-template-columns: 300px 1fr; }
 
-            .staticrypt-html {
-                height: 100%;
-            }
+  /* ---------------- RAIL ---------------- */
+  .rail { border-right: 1px solid var(--line); background: var(--panel); }
 
-            .staticrypt-body {
-                height: 100%;
-                margin: 0;
-            }
+  .rail button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    border-left: 4px solid transparent;
+    padding: 22px 24px;
+    cursor: pointer;
+    color: var(--body);
+    transition: background .14s, border-color .14s, color .14s;
+  }
 
-            .staticrypt-content {
-                height: 100%;
-                margin-bottom: 1em;
-                background: #f4f4f4;
-                font-family: "Arial", sans-serif;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
+  .rail button:last-child { border-bottom: none; }
+  .rail button:hover { background: #f2f2f2; }
 
-            .staticrypt-instructions {
-                margin-top: -1em;
-                margin-bottom: 1em;
-            }
+  .rail .num {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
 
-            .staticrypt-title {
-                font-size: 1.5em;
-            }
+  .rail .label { display: block; font-size: 19px; font-weight: bold; color: var(--ink); line-height: 1.2; }
+  .rail .sub { display: block; font-size: 12px; color: var(--muted); margin-top: 5px; }
 
-            label.staticrypt-remember {
-                display: flex;
-                align-items: center;
-                margin-bottom: 1em;
-            }
+  .rail button[aria-selected="true"] {
+    background: var(--ink);
+    border-left-color: var(--ink);
+    color: #fff;
+  }
+  .rail button[aria-selected="true"] .label { color: #fff; }
+  .rail button[aria-selected="true"] .num,
+  .rail button[aria-selected="true"] .sub { color: #b9b9b9; }
 
-            .staticrypt-remember input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 1em;
-            }
+  /* ---------------- PANEL ---------------- */
+  .panels { padding: 44px 52px 52px; min-height: 520px; }
 
-            .hidden {
-                display: none !important;
-            }
+  .panel { display: none; }
+  .panel.active { display: block; animation: rise .2s ease-out; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-            .staticrypt-spinner-container {
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+  .crumb {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    padding-bottom: 3px;
+    border-bottom: 2px solid var(--ink);
+  }
 
-            .staticrypt-spinner {
-                display: inline-block;
-                width: 2rem;
-                height: 2rem;
-                vertical-align: text-bottom;
-                border: 0.25em solid gray;
-                border-right-color: transparent;
-                border-radius: 50%;
-                -webkit-animation: spinner-border 0.75s linear infinite;
-                animation: spinner-border 0.75s linear infinite;
-                animation-duration: 0.75s;
-                animation-timing-function: linear;
-                animation-delay: 0s;
-                animation-iteration-count: infinite;
-                animation-direction: normal;
-                animation-fill-mode: none;
-                animation-play-state: running;
-                animation-name: spinner-border;
-            }
+  .panel h2 { font-size: 30px; line-height: 1.12; letter-spacing: -0.5px; color: var(--ink); margin-bottom: 8px; }
+  .panel .meta { font-size: 13.5px; color: var(--muted); margin-bottom: 24px; }
+  .panel p { font-size: 14.5px; margin-bottom: 14px; }
 
-            @keyframes spinner-border {
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
+  h3.sub {
+    font-size: 12px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 28px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--line);
+  }
 
-            @media screen and (-webkit-min-device-pixel-ratio: 0) {
-                .staticrypt-form input[type="password"],
-                input[type="text"] {
-                    font-size: 16px;
-                }
-            }
-        </style>
-    </head>
+  ul { list-style: none; margin: 18px 0 8px; }
+  ul li { position: relative; padding-left: 22px; margin-bottom: 9px; font-size: 14px; }
+  ul li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 10px;
+    width: 7px;
+    height: 7px;
+    background: var(--ink);
+  }
 
-    <body class="staticrypt-body">
-        <div id="staticrypt_loading" class="staticrypt-spinner-container">
-            <div class="staticrypt-spinner"></div>
+  .stack-label {
+    font-size: 11px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 30px 0 12px;
+  }
+
+  .stack { display: flex; flex-wrap: wrap; gap: 9px; }
+
+  .chip {
+    font-size: 13px;
+    padding: 10px 16px;
+    border: 1px solid var(--ink);
+    background: #fff;
+    color: var(--ink);
+    letter-spacing: .2px;
+  }
+
+  .chip.primary { background: var(--ink); color: #fff; font-weight: bold; }
+
+  /* ---------------- OTHER PROJECTS ---------------- */
+  .others { border-top: 1px solid var(--line); padding: 34px 46px 40px; background: var(--panel); }
+  .others h3 { font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--ink);
+    padding: 20px 22px;
+  }
+
+  .card h4 { font-size: 16px; color: var(--ink); margin-bottom: 4px; line-height: 1.25; }
+  .card .tags { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .card p { font-size: 13px; margin: 0; }
+  .card a { color: var(--ink); }
+
+  /* ---------------- FOOTER ---------------- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 22px 46px;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  footer a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+
+
+  /* ---------------- PROFILE PICTURE ---------------- */
+  .brand { display: flex; gap: 22px; align-items: center; }
+
+  .avatar {
+    position: relative;
+    width: 118px; height: 118px; flex: 0 0 118px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .avatar::after {
+    content: "OB";
+    color: #fff; font-weight: bold; font-size: 34px; letter-spacing: 3px;
+  }
+
+  .avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------------- STACK TILES ---------------- */
+  .stack-box {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 20px 22px 22px;
+  }
+
+  .stack { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .tech {
+    display: inline-flex; align-items: center; gap: 11px;
+    border: 1px solid var(--ink); background: #fff; color: var(--ink);
+    padding: 7px 16px 7px 7px;
+    font-size: 13px; letter-spacing: .2px; white-space: nowrap;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+
+  .tech::before {
+    content: ""; width: 26px; height: 26px; flex: 0 0 26px;
+    background-color: var(--ink);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px 15px;
+  }
+
+  .tech.primary { border-width: 2px; font-weight: bold; }
+
+  .tech.si-ansible::before { background-image: url("icons/ansible.svg"); background-size: 16px 16px; }
+  .tech.si-cypress::before { background-image: url("icons/cypress.svg"); background-size: 16px 16px; }
+  .tech.si-docker::before { background-image: url("icons/docker.svg"); background-size: 16px 16px; }
+  .tech.si-githubactions::before { background-image: url("icons/githubactions.svg"); background-size: 16px 16px; }
+  .tech.si-grafana::before { background-image: url("icons/grafana.svg"); background-size: 16px 16px; }
+  .tech.si-hetzner::before { background-image: url("icons/hetzner.svg"); background-size: 16px 16px; }
+  .tech.si-k3s::before { background-image: url("icons/k3s.svg"); background-size: 16px 16px; }
+  .tech.si-kubernetes::before { background-image: url("icons/kubernetes.svg"); background-size: 16px 16px; }
+  .tech.si-linux::before { background-image: url("icons/linux.svg"); background-size: 16px 16px; }
+  .tech.si-netdata::before { background-image: url("icons/netdata.svg"); background-size: 16px 16px; }
+  .tech.si-nextjs::before { background-image: url("icons/nextjs.svg"); background-size: 16px 16px; }
+  .tech.si-nginx::before { background-image: url("icons/nginx.svg"); background-size: 16px 16px; }
+  .tech.si-ollama::before { background-image: url("icons/ollama.svg"); background-size: 16px 16px; }
+  .tech.si-portainer::before { background-image: url("icons/portainer.svg"); background-size: 16px 16px; }
+  .tech.si-prometheus::before { background-image: url("icons/prometheus.svg"); background-size: 16px 16px; }
+  .tech.si-python::before { background-image: url("icons/python.svg"); background-size: 16px 16px; }
+  .tech.si-terraform::before { background-image: url("icons/terraform.svg"); background-size: 16px 16px; }
+  .tech.si-wordpress::before { background-image: url("icons/wordpress.svg"); background-size: 16px 16px; }
+
+  .tech:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,.13); }
+
+  .tech.i-cube::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2 3 7v10l9 5 9-5V7z'/%3E%3Cpath d='M3 7l9 5 9-5M12 12v10'%3C/svg%3E"); }
+  .tech.i-cloud::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 18a4 4 0 0 0 .6-8A5.5 5.5 0 0 0 7.2 11.5 3.5 3.5 0 0 0 7 18z'%3C/svg%3E"); }
+  .tech.i-chart::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20V11M10 20V4M16 20v-6M2 20h20'%3C/svg%3E"); }
+  .tech.i-term::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 17l5-5-5-5M13 19h6'%3C/svg%3E"); }
+  .tech.i-gear::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M12 2v3M12 19v3M2 12h3M19 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1'%3C/svg%3E"); }
+  .tech.i-shield::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l7 3v5.5c0 4-3 7.2-7 9.5-4-2.3-7-5.5-7-9.5V6z'%3C/svg%3E"); }
+  .tech.i-server::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='7'/%3E%3Crect x='3' y='13' width='18' height='7'/%3E%3Cpath d='M7 7.5h.01M7 16.5h.01'%3C/svg%3E"); }
+  .tech.i-code::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 8l-4 4 4 4M15 8l4 4-4 4'%3C/svg%3E"); }
+
+  .stack-label { margin-bottom: 9px; }
+  .stack-box .stack-label { margin-top: 0; }
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width: 860px) {
+    .body-grid { grid-template-columns: 1fr; }
+    .rail { display: flex; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--line); }
+    .rail button { border-bottom: none; border-left: none; border-bottom: 3px solid transparent; min-width: 200px; padding: 16px 18px; }
+    .rail button[aria-selected="true"] { border-bottom-color: var(--ink); }
+    .rail .label { font-size: 16px; }
+    .rail .sub { display: none; }
+    .panels { padding: 30px 24px 36px; }
+    .top { padding: 28px 24px 22px; }
+    .brand { gap: 16px; }
+    .avatar { width: 84px; height: 84px; flex-basis: 84px; }
+    .avatar::after { font-size: 26px; }
+    .tech { font-size: 12px; padding: 6px 12px 6px 6px; }
+    .tech::before { width: 22px; height: 22px; flex-basis: 22px; background-size: 13px 13px; }
+    .top h1 { font-size: 26px; }
+    .top .who { text-align: left; }
+    .panel h2 { font-size: 24px; }
+    .others { padding: 26px 24px 30px; }
+    footer { padding: 18px 24px; }
+  }
+
+  /* ---------------- PRINT ---------------- */
+  @media print {
+    body { background: #fff; padding: 0; font-size: 11.5px; }
+    .frame { border: none; max-width: none; }
+    .rail { display: none; }
+    .body-grid { display: block; }
+    .panels { padding: 0; min-height: 0; }
+    .panel { display: block !important; page-break-inside: avoid; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+    .panel h2 { font-size: 22px; }
+    .avatar { width: 76px; height: 76px; flex-basis: 76px; }
+    .stack-box { padding: 12px 14px; }
+    .others { background: #fff; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <div class="top">
+    <div class="brand">
+      <div class="avatar"><img src="img/profile.jpg" alt="Oussama Boukhachem" onerror="this.remove()"></div>
+      <div>
+        <h1>DevOps<br>Portfolio</h1>
+        <div class="role">Cloud Native / DevOps Engineer</div>
+      </div>
+    </div>
+    <div class="who">
+      <strong>Oussama Boukhachem</strong>
+      Salerno, Italy<br>
+      boukhachem.o@gmail.com<br>
+      <a href="https://linkedin.com/in/oussama-boukhachem/">LinkedIn</a> |
+      <a href="https://github.com/oussama-boukhachem">GitHub</a>
+    </div>
+  </div>
+
+  <div class="body-grid">
+
+    <!-- ============ RAIL ============ -->
+    <nav class="rail" role="tablist" aria-label="Portfolio sections">
+      <button role="tab" data-panel="p-homelab" aria-selected="true">
+        <span class="num">01</span>
+        <span class="label">Home Lab</span>
+        <span class="sub">K3s, monitoring, backups, hardening</span>
+      </button>
+      <button role="tab" data-panel="p-rag" aria-selected="false">
+        <span class="num">02</span>
+        <span class="label">AI RAG</span>
+        <span class="sub">Hybrid local and cloud retrieval stack</span>
+      </button>
+      <button role="tab" data-panel="p-internship" aria-selected="false">
+        <span class="num">03</span>
+        <span class="label">Internship</span>
+        <span class="sub">CI/CD, containers and monitoring in production</span>
+      </button>
+      <button role="tab" data-panel="p-job" aria-selected="false">
+        <span class="num">04</span>
+        <span class="label">DevOps Job</span>
+        <span class="sub">Full time after the internship</span>
+      </button>
+    </nav>
+
+    <!-- ============ PANELS ============ -->
+    <div class="panels">
+
+      <section class="panel active" id="p-homelab" role="tabpanel">
+        <span class="crumb">Personal Infrastructure</span>
+        <h2>Home Lab</h2>
+        <div class="meta">Self-hosted K3s, monitoring and backups | 2026 - present</div>
+        <p>My home lab is where I test things before I trust them. It runs on VPS servers and covers the full loop: a Kubernetes cluster, workloads deployed to it, monitoring that actually alerts, and backups that have been restored at least once.</p>
+        <h3 class="sub">Kubernetes Cluster</h3>
+        <p>A K3s cluster with one control plane node and two workers. Workloads are declared in manifests, released with rolling updates and organized with namespaces. The cluster is managed through Portainer, which keeps nodes, workloads and logs in one place. Containers that used to run directly on the hosts were migrated into the cluster, so there is one place where workloads live and one place where they are observed.</p>
+        <h3 class="sub">Monitoring and Backups</h3>
+        <p>Grafana and Prometheus collect metrics from cAdvisor, node and blackbox exporters, covering containers, hosts and endpoints, with Netdata alongside for real-time metrics and anomaly detection. Servers and databases are backed up on a schedule to my local server with rsync, with a retention policy, integrity checks and failure notification.</p>
+        <ul>
+          <li>Three-node K3s cluster: control plane plus two workers, managed with Portainer</li>
+          <li>Grafana, Prometheus and Netdata with alerting on container, host and endpoint health</li>
+          <li>Scheduled backups with retention, integrity checks and tested restores</li>
+          <li>Hardened with UFW, Fail2ban, key-based SSH and Nginx as a TLS reverse proxy</li>
+        </ul>
+        <div class="stack-box">
+          <div class="stack-label">Stack</div>
+          <div class="stack">
+            <span class="tech si-k3s primary">K3s</span>
+            <span class="tech si-portainer">Portainer</span>
+            <span class="tech si-docker primary">Docker</span>
+            <span class="tech si-hetzner">Hetzner Cloud</span>
+            <span class="tech i-gear primary">rsync</span>
+            <span class="tech si-grafana primary">Grafana</span>
+            <span class="tech si-prometheus">Prometheus</span>
+            <span class="tech si-netdata">Netdata</span>
+            <span class="tech si-nginx">Nginx</span>
+            <span class="tech i-shield">UFW</span>
+            <span class="tech i-shield">Fail2ban</span>
+            <span class="tech si-linux">Linux</span>
+          </div>
         </div>
+      </section>
 
-        <div id="staticrypt_content" class="staticrypt-content hidden">
-            <div class="staticrypt-page">
-                <div class="staticrypt-form">
-                    <div class="staticrypt-instructions">
-                        <p class="staticrypt-title">Oussama Boukhachem - Portfolio</p>
-                        <p>Enter the password I sent you to open the portfolio.</p>
-                    </div>
-
-                    <hr class="staticrypt-hr" />
-
-                    <form id="staticrypt-form" action="#" method="post">
-                        <div class="staticrypt-password-container">
-                            <input
-                                id="staticrypt-password"
-                                type="password"
-                                name="password"
-                                placeholder="Password"
-                                autofocus
-                            />
-
-                            <img
-                                class="staticrypt-toggle-password-visibility"
-                                alt="Show password"
-                                title="Show password"
-                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNS4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTM4LjggNS4xQzI4LjQtMy4xIDEzLjMtMS4yIDUuMSA5LjJTLTEuMiAzNC43IDkuMiA0Mi45bDU5MiA0NjRjMTAuNCA4LjIgMjUuNSA2LjMgMzMuNy00LjFzNi4zLTI1LjUtNC4xLTMzLjdMNTI1LjYgMzg2LjdjMzkuNi00MC42IDY2LjQtODYuMSA3OS45LTExOC40YzMuMy03LjkgMy4zLTE2LjcgMC0yNC42Yy0xNC45LTM1LjctNDYuMi04Ny43LTkzLTEzMS4xQzQ2NS41IDY4LjggNDAwLjggMzIgMzIwIDMyYy02OC4yIDAtMTI1IDI2LjMtMTY5LjMgNjAuOEwzOC44IDUuMXpNMjIzLjEgMTQ5LjVDMjQ4LjYgMTI2LjIgMjgyLjcgMTEyIDMyMCAxMTJjNzkuNSAwIDE0NCA2NC41IDE0NCAxNDRjMCAyNC45LTYuMyA0OC4zLTE3LjQgNjguN0w0MDggMjk0LjVjOC40LTE5LjMgMTAuNi00MS40IDQuOC02My4zYy0xMS4xLTQxLjUtNDcuOC02OS40LTg4LjYtNzEuMWMtNS44LS4yLTkuMiA2LjEtNy40IDExLjdjMi4xIDYuNCAzLjMgMTMuMiAzLjMgMjAuM2MwIDEwLjItMi40IDE5LjgtNi42IDI4LjNsLTkwLjMtNzAuOHpNMzczIDM4OS45Yy0xNi40IDYuNS0zNC4zIDEwLjEtNTMgMTAuMWMtNzkuNSAwLTE0NC02NC41LTE0NC0xNDRjMC02LjkgLjUtMTMuNiAxLjQtMjAuMkw4My4xIDE2MS41QzYwLjMgMTkxLjIgNDQgMjIwLjggMzQuNSAyNDMuN2MtMy4zIDcuOS0zLjMgMTYuNyAwIDI0LjZjMTQuOSAzNS43IDQ2LjIgODcuNyA5MyAxMzEuMUMxNzQuNSA0NDMuMiAyMzkuMiA0ODAgMzIwIDQ4MGM0Ny44IDAgODkuOS0xMi45IDEyNi4yLTMyLjVMMzczIDM4OS45eiIvPjwvc3ZnPg=="
-                            />
-                        </div>
-
-                        <label id="staticrypt-remember-label" class="staticrypt-remember hidden">
-                            <input id="staticrypt-remember" type="checkbox" name="remember" />
-                            Remember me
-                        </label>
-
-                        <input type="submit" class="staticrypt-decrypt-button" value="OPEN" />
-                    </form>
-                </div>
-            </div>
+      <section class="panel" id="p-rag" role="tabpanel">
+        <span class="crumb">AI and Retrieval</span>
+        <h2>RAG and Semantic Memory Stack</h2>
+        <div class="meta">Hybrid setup: self-hosted locally and running online | per-agent tuning</div>
+        <p>A retrieval-augmented generation stack that gives my agents long-term memory instead of a blank context on every run. The local version mirrors the online one and adds more agents, each tuned for a specific task.</p>
+        <h3 class="sub">Retrieval</h3>
+        <p>Notes and documents are embedded locally, stored in an index, and retrieved at query time, so answers come from real stored context instead of guesswork. Retrieval is hybrid: keyword matching and vector similarity run together, then results are re-ranked so the context is not five paraphrases of the same paragraph.</p>
+        <h3 class="sub">Per-agent tuning</h3>
+        <p>Each agent has its own temperature setting, from 0.3 for deterministic, factual retrieval up to 1.9 for creative, high-variance generation. Temperature is a deliberate design choice for every agent, not a default nobody looks at.</p>
+        <h3 class="sub">Autonomous monitoring agent</h3>
+        <p>A separate agent runs automated tests against my servers on its own schedule, detects anomalies and reports them, instead of waiting for me to notice downtime. It complements the metrics stack: proactive checks on top of passive dashboards.</p>
+        <h3 class="sub">Lab-to-lab link</h3>
+        <p>The online RAG reaches my local lab over SSH keys, with no passwords and no shared secrets. Permissions are scoped so the link can do exactly what it needs and nothing more, which means an exposed entry point cannot reach the rest of the lab.</p>
+        <ul>
+          <li>Local embeddings, so documents stay on my own machines</li>
+          <li>Hybrid retrieval: keyword plus vector search, with re-ranking</li>
+          <li>Per-agent temperature from 0.3 for factual work up to 1.9 for creative work</li>
+          <li>Monitoring agent running scheduled checks and reporting anomalies</li>
+          <li>Online-to-local link over SSH keys, scoped with least privilege</li>
+          <li>Kept local for privacy, cost control and fast iteration, using the same patterns as the cloud version</li>
+        </ul>
+        <div class="stack-box">
+          <div class="stack-label">Stack</div>
+          <div class="stack">
+            <span class="tech i-code primary">RAG</span>
+            <span class="tech si-ollama primary">Ollama</span>
+            <span class="tech i-chart">Vector search</span>
+            <span class="tech i-chart">Hybrid search</span>
+            <span class="tech i-code">LLMs</span>
+            <span class="tech i-shield">SSH</span>
+            <span class="tech si-python">Python</span>
+            <span class="tech si-linux">Linux</span>
+          </div>
         </div>
+      </section>
 
-        <script>
-            // these variables will be filled when generating the file - the template format is 'variable_name'
-            const staticryptInitiator = ((function(){
-  const exports = {};
-  const cryptoEngine = ((function(){
-  const exports = {};
-  const { subtle } = crypto;
+      <section class="panel" id="p-internship" role="tabpanel">
+        <span class="crumb">Work</span>
+        <h2>DevOps Internship</h2>
+        <div class="meta">TrendTech (part of TrendX) | Jun 2026 - present, started as an intern</div>
+        <p>I joined as a DevOps intern on a live production product: a Next.js front end, headless WordPress, and a database, all running in containers. This is where I moved from managing servers to owning delivery.</p>
+        <ul>
+          <li>Managed Docker containers with Docker Compose and automated container provisioning through the Portainer API from GitHub Actions, removing SSH access from the deployment path</li>
+          <li>Managed Kubernetes pod deployments triggered by GitHub Actions pipelines</li>
+          <li>Configured and provisioned multiple Droplets with Ansible playbooks</li>
+          <li>Set up the full monitoring stack: Grafana and Prometheus with cAdvisor, node and blackbox exporters, plus Netdata with the Docker plugin</li>
+          <li>Managed Nginx configuration inside zero-downtime update pipelines across staging, dev and prod branches, including cleanup of staging containers and configs</li>
+          <li>Ran the production pipeline: Cypress staging tests with screenshot and video artifacts, lint and format checks, then zero-downtime Blue/Green deployment after developer confirmation</li>
+        </ul>
+        <div class="stack-box">
+          <div class="stack-label">Stack</div>
+          <div class="stack">
+            <span class="tech si-docker primary">Docker Compose</span>
+            <span class="tech si-kubernetes primary">Kubernetes</span>
+            <span class="tech si-githubactions primary">GitHub Actions</span>
+            <span class="tech si-portainer">Portainer</span>
+            <span class="tech si-ansible">Ansible</span>
+            <span class="tech si-grafana">Grafana</span>
+            <span class="tech si-prometheus">Prometheus</span>
+            <span class="tech si-netdata">Netdata</span>
+            <span class="tech si-nginx">Nginx</span>
+            <span class="tech si-cypress">Cypress</span>
+            <span class="tech si-nextjs">Next.js</span>
+            <span class="tech si-wordpress">WordPress</span>
+          </div>
+        </div>
+      </section>
 
-const IV_BITS = 16 * 8;
-const HEX_BITS = 4;
-const ENCRYPTION_ALGO = "AES-CBC";
+      <section class="panel" id="p-job" role="tabpanel">
+        <span class="crumb">Work</span>
+        <h2>DevOps Engineer</h2>
+        <div class="meta">TrendTech (part of TrendX) | taken on full time after the internship</div>
+        <p>The internship turned into a full-time position. Instead of a single project, I now manage the whole stack together with the DevOps team.</p>
+        <p>Day to day this means keeping production applications shipping without downtime, keeping the monitoring honest, and making sure a deployment can be reversed in one step if it goes wrong.</p>
+        <ul>
+          <li>CI/CD pipelines, including the staging to dev to prod promotion flow</li>
+          <li>Maintain the monitoring and alerting stack that production relies on</li>
+          <li>Handle Nginx configuration and release flows with zero downtime</li>
+          <li>Support developers through release gates, test artifacts and rollbacks</li>
+          <li>Work across different project types: Laravel, Next.js, WordPress and smartphone apps</li>
+        </ul>
+        <div class="stack-box">
+          <div class="stack-label">Stack</div>
+          <div class="stack">
+            <span class="tech si-kubernetes primary">Kubernetes</span>
+            <span class="tech si-githubactions primary">GitHub Actions</span>
+            <span class="tech si-docker primary">Docker</span>
+            <span class="tech si-ansible">Ansible</span>
+            <span class="tech si-nginx">Nginx</span>
+            <span class="tech si-grafana">Grafana</span>
+            <span class="tech si-prometheus">Prometheus</span>
+            <span class="tech si-netdata">Netdata</span>
+            <span class="tech i-gear">Blue/Green</span>
+            <span class="tech si-linux">Linux</span>
+          </div>
+        </div>
+      </section>
 
-/**
- * Translates between utf8 encoded hexadecimal strings
- * and Uint8Array bytes.
- */
-const HexEncoder = {
-    /**
-     * hex string -> bytes
-     * @param {string} hexString
-     * @returns {Uint8Array}
-     */
-    parse: function (hexString) {
-        if (hexString.length % 2 !== 0) throw "Invalid hexString";
-        const arrayBuffer = new Uint8Array(hexString.length / 2);
+    </div>
+  </div>
 
-        for (let i = 0; i < hexString.length; i += 2) {
-            const byteValue = parseInt(hexString.substring(i, i + 2), 16);
-            if (isNaN(byteValue)) {
-                throw "Invalid hexString";
-            }
-            arrayBuffer[i / 2] = byteValue;
-        }
-        return arrayBuffer;
-    },
+    <!-- ============ OTHER PROJECTS ============ -->
+  <div class="others">
+    <h3>Other Projects</h3>
+    <div class="cards">
+      <div class="card">
+        <h4>HayMenu - Digital Menu for Restaurants</h4>
+        <div class="tags">HTML / CSS / JavaScript | GitHub Pages | 2026</div>
+        <p>
+          Responsive digital menu with photos and category filters, designed, built and published on my own.
+          <a href="https://oussama-boukhachem.github.io/HayMenu/">oussama-boukhachem.github.io/HayMenu</a>
+        </p>
+      </div>
+      <div class="card">
+        <h4>Performance Benchmarking Pipeline (MSc Thesis)</h4>
+        <div class="tags">JMH | Apache Ignite | Research</div>
+        <p>
+          Benchmarking pipeline comparing execution time, memory usage and resource consumption between AI-generated and
+          hand-written code, built on the Apache Ignite codebase.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Servise19 - Smart Services Platform</h4>
+        <div class="tags">Web platform | Best Graduation Project Award</div>
+        <p>
+          Public platform connecting citizens to local services, awarded by ISET Tataouine and featured in national media.
+        </p>
+      </div>
+    </div>
+  </div>
 
-    /**
-     * bytes -> hex string
-     * @param {Uint8Array} bytes
-     * @returns {string}
-     */
-    stringify: function (bytes) {
-        const hexBytes = [];
+  <footer>
+    <span>Oussama Boukhachem | boukhachem.o@gmail.com | (+39) 347 838 2864</span>
+    <span><a href="cv-updated-devops-eng.html">Back to CV</a></span>
+  </footer>
 
-        for (let i = 0; i < bytes.length; ++i) {
-            let byteString = bytes[i].toString(16);
-            if (byteString.length < 2) {
-                byteString = "0" + byteString;
-            }
-            hexBytes.push(byteString);
-        }
-        return hexBytes.join("");
-    },
-};
+</div>
 
-/**
- * Translates between utf8 strings and Uint8Array bytes.
- */
-const UTF8Encoder = {
-    parse: function (str) {
-        return new TextEncoder().encode(str);
-    },
+<script>
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.rail button'));
+    var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
 
-    stringify: function (bytes) {
-        return new TextDecoder().decode(bytes);
-    },
-};
-
-/**
- * Salt and encrypt a msg with a password.
- */
-async function encrypt(msg, hashedPassword) {
-    // Must be 16 bytes, unpredictable, and preferably cryptographically random. However, it need not be secret.
-    // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt#parameters
-    const iv = crypto.getRandomValues(new Uint8Array(IV_BITS / 8));
-
-    const key = await subtle.importKey("raw", HexEncoder.parse(hashedPassword), ENCRYPTION_ALGO, false, ["encrypt"]);
-
-    const encrypted = await subtle.encrypt(
-        {
-            name: ENCRYPTION_ALGO,
-            iv: iv,
-        },
-        key,
-        UTF8Encoder.parse(msg)
-    );
-
-    // iv will be 32 hex characters, we prepend it to the ciphertext for use in decryption
-    return HexEncoder.stringify(iv) + HexEncoder.stringify(new Uint8Array(encrypted));
-}
-exports.encrypt = encrypt;
-
-/**
- * Decrypt a salted msg using a password.
- *
- * @param {string} encryptedMsg
- * @param {string} hashedPassword
- * @returns {Promise<string>}
- */
-async function decrypt(encryptedMsg, hashedPassword) {
-    const ivLength = IV_BITS / HEX_BITS;
-    const iv = HexEncoder.parse(encryptedMsg.substring(0, ivLength));
-    const encrypted = encryptedMsg.substring(ivLength);
-
-    const key = await subtle.importKey("raw", HexEncoder.parse(hashedPassword), ENCRYPTION_ALGO, false, ["decrypt"]);
-
-    const outBuffer = await subtle.decrypt(
-        {
-            name: ENCRYPTION_ALGO,
-            iv: iv,
-        },
-        key,
-        HexEncoder.parse(encrypted)
-    );
-
-    return UTF8Encoder.stringify(new Uint8Array(outBuffer));
-}
-exports.decrypt = decrypt;
-
-/**
- * Salt and hash the password so it can be stored in localStorage without opening a password reuse vulnerability.
- *
- * @param {string} password
- * @param {string} salt
- * @returns {Promise<string>}
- */
-async function hashPassword(password, salt) {
-    // we hash the password in multiple steps, each adding more iterations. This is because we used to allow less
-    // iterations, so for backward compatibility reasons, we need to support going from that to more iterations.
-    let hashedPassword = await hashLegacyRound(password, salt);
-
-    hashedPassword = await hashSecondRound(hashedPassword, salt);
-
-    return hashThirdRound(hashedPassword, salt);
-}
-exports.hashPassword = hashPassword;
-
-/**
- * This hashes the password with 1k iterations. This is a low number, we need this function to support backwards
- * compatibility.
- *
- * @param {string} password
- * @param {string} salt
- * @returns {Promise<string>}
- */
-function hashLegacyRound(password, salt) {
-    return pbkdf2(password, salt, 1000, "SHA-1");
-}
-exports.hashLegacyRound = hashLegacyRound;
-
-/**
- * Add a second round of iterations. This is because we used to use 1k, so for backwards compatibility with
- * remember-me/autodecrypt links, we need to support going from that to more iterations.
- *
- * @param hashedPassword
- * @param salt
- * @returns {Promise<string>}
- */
-function hashSecondRound(hashedPassword, salt) {
-    return pbkdf2(hashedPassword, salt, 14000, "SHA-256");
-}
-exports.hashSecondRound = hashSecondRound;
-
-/**
- * Add a third round of iterations to bring total number to 600k. This is because we used to use 1k, then 15k, so for
- * backwards compatibility with remember-me/autodecrypt links, we need to support going from that to more iterations.
- *
- * @param hashedPassword
- * @param salt
- * @returns {Promise<string>}
- */
-function hashThirdRound(hashedPassword, salt) {
-    return pbkdf2(hashedPassword, salt, 585000, "SHA-256");
-}
-exports.hashThirdRound = hashThirdRound;
-
-/**
- * Salt and hash the password so it can be stored in localStorage without opening a password reuse vulnerability.
- *
- * @param {string} password
- * @param {string} salt
- * @param {int} iterations
- * @param {string} hashAlgorithm
- * @returns {Promise<string>}
- */
-async function pbkdf2(password, salt, iterations, hashAlgorithm) {
-    const key = await subtle.importKey("raw", UTF8Encoder.parse(password), "PBKDF2", false, ["deriveBits"]);
-
-    const keyBytes = await subtle.deriveBits(
-        {
-            name: "PBKDF2",
-            hash: hashAlgorithm,
-            iterations,
-            salt: UTF8Encoder.parse(salt),
-        },
-        key,
-        256
-    );
-
-    return HexEncoder.stringify(new Uint8Array(keyBytes));
-}
-
-function generateRandomSalt() {
-    const bytes = crypto.getRandomValues(new Uint8Array(128 / 8));
-
-    return HexEncoder.stringify(new Uint8Array(bytes));
-}
-exports.generateRandomSalt = generateRandomSalt;
-
-async function signMessage(hashedPassword, message) {
-    const key = await subtle.importKey(
-        "raw",
-        HexEncoder.parse(hashedPassword),
-        {
-            name: "HMAC",
-            hash: "SHA-256",
-        },
-        false,
-        ["sign"]
-    );
-    const signature = await subtle.sign("HMAC", key, UTF8Encoder.parse(message));
-
-    return HexEncoder.stringify(new Uint8Array(signature));
-}
-exports.signMessage = signMessage;
-
-function getRandomAlphanum() {
-    const possibleCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-    let byteArray;
-    let parsedInt;
-
-    // Keep generating new random bytes until we get a value that falls
-    // within a range that can be evenly divided by possibleCharacters.length
-    do {
-        byteArray = crypto.getRandomValues(new Uint8Array(1));
-        // extract the lowest byte to get an int from 0 to 255 (probably unnecessary, since we're only generating 1 byte)
-        parsedInt = byteArray[0] & 0xff;
-    } while (parsedInt >= 256 - (256 % possibleCharacters.length));
-
-    // Take the modulo of the parsed integer to get a random number between 0 and totalLength - 1
-    const randomIndex = parsedInt % possibleCharacters.length;
-
-    return possibleCharacters[randomIndex];
-}
-
-/**
- * Generate a random string of a given length.
- *
- * @param {int} length
- * @returns {string}
- */
-function generateRandomString(length) {
-    let randomString = "";
-
-    for (let i = 0; i < length; i++) {
-        randomString += getRandomAlphanum();
+    function activate(id, updateHash) {
+      if (!document.getElementById(id)) return;
+      tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.panel === id)); });
+      panels.forEach(function (p) { p.classList.toggle('active', p.id === id); });
+      if (updateHash && history.replaceState) history.replaceState(null, '', '#' + id.replace(/^p-/, ''));
+      var host = document.querySelector('.panels');
+      if (host && host.scrollIntoView && window.innerWidth < 860) host.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    return randomString;
-}
-exports.generateRandomString = generateRandomString;
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { activate(t.dataset.panel, true); });
+    });
 
-  return exports;
-})());
-const codec = ((function(){
-  const exports = {};
-  /**
- * Initialize the codec with the provided cryptoEngine - this return functions to encode and decode messages.
- *
- * @param cryptoEngine - the engine to use for encryption / decryption
- */
-function init(cryptoEngine) {
-    const exports = {};
-
-    /**
-     * Top-level function for encoding a message.
-     * Includes password hashing, encryption, and signing.
-     *
-     * @param {string} msg
-     * @param {string} password
-     * @param {string} salt
-     *
-     * @returns {string} The encoded text
-     */
-    async function encode(msg, password, salt) {
-        const hashedPassword = await cryptoEngine.hashPassword(password, salt);
-
-        const encrypted = await cryptoEngine.encrypt(msg, hashedPassword);
-
-        // we use the hashed password in the HMAC because this is effectively what will be used a password (so we can store
-        // it in localStorage safely, we don't use the clear text password)
-        const hmac = await cryptoEngine.signMessage(hashedPassword, encrypted);
-
-        return hmac + encrypted;
-    }
-    exports.encode = encode;
-
-    /**
-     * Encode using a password that has already been hashed. This is useful to encode multiple messages in a row, that way
-     * we don't need to hash the password multiple times.
-     *
-     * @param {string} msg
-     * @param {string} hashedPassword
-     *
-     * @returns {string} The encoded text
-     */
-    async function encodeWithHashedPassword(msg, hashedPassword) {
-        const encrypted = await cryptoEngine.encrypt(msg, hashedPassword);
-
-        // we use the hashed password in the HMAC because this is effectively what will be used a password (so we can store
-        // it in localStorage safely, we don't use the clear text password)
-        const hmac = await cryptoEngine.signMessage(hashedPassword, encrypted);
-
-        return hmac + encrypted;
-    }
-    exports.encodeWithHashedPassword = encodeWithHashedPassword;
-
-    /**
-     * Top-level function for decoding a message.
-     * Includes signature check and decryption.
-     *
-     * @param {string} signedMsg
-     * @param {string} hashedPassword
-     * @param {string} salt
-     * @param {int} backwardCompatibleAttempt
-     * @param {string} originalPassword
-     *
-     * @returns {Object} {success: true, decoded: string} | {success: false, message: string}
-     */
-    async function decode(signedMsg, hashedPassword, salt, backwardCompatibleAttempt = 0, originalPassword = "") {
-        const encryptedHMAC = signedMsg.substring(0, 64);
-        const encryptedMsg = signedMsg.substring(64);
-        const decryptedHMAC = await cryptoEngine.signMessage(hashedPassword, encryptedMsg);
-
-        if (decryptedHMAC !== encryptedHMAC) {
-            // we have been raising the number of iterations in the hashing algorithm multiple times, so to support the old
-            // remember-me/autodecrypt links we need to try bringing the old hashes up to speed.
-            originalPassword = originalPassword || hashedPassword;
-            if (backwardCompatibleAttempt === 0) {
-                const updatedHashedPassword = await cryptoEngine.hashThirdRound(originalPassword, salt);
-
-                return decode(signedMsg, updatedHashedPassword, salt, backwardCompatibleAttempt + 1, originalPassword);
-            }
-            if (backwardCompatibleAttempt === 1) {
-                let updatedHashedPassword = await cryptoEngine.hashSecondRound(originalPassword, salt);
-                updatedHashedPassword = await cryptoEngine.hashThirdRound(updatedHashedPassword, salt);
-
-                return decode(signedMsg, updatedHashedPassword, salt, backwardCompatibleAttempt + 1, originalPassword);
-            }
-
-            return { success: false, message: "Signature mismatch" };
-        }
-
-        return {
-            success: true,
-            decoded: await cryptoEngine.decrypt(encryptedMsg, hashedPassword),
-        };
-    }
-    exports.decode = decode;
-
-    return exports;
-}
-exports.init = init;
-
-  return exports;
-})());
-const decode = codec.init(cryptoEngine).decode;
-
-/**
- * Initialize the staticrypt module, that exposes functions callbable by the password_template.
- *
- * @param {{
- *  staticryptEncryptedMsgUniqueVariableName: string,
- *  isRememberEnabled: boolean,
- *  rememberDurationInDays: number,
- *  staticryptSaltUniqueVariableName: string,
- * }} staticryptConfig - object of data that is stored on the password_template at encryption time.
- *
- * @param {{
- *  rememberExpirationKey: string,
- *  rememberPassphraseKey: string,
- *  replaceHtmlCallback: function,
- *  clearLocalStorageCallback: function,
- * }} templateConfig - object of data that can be configured by a custom password_template.
- */
-function init(staticryptConfig, templateConfig) {
-    const exports = {};
-
-    /**
-     * Decrypt our encrypted page, replace the whole HTML.
-     *
-     * @param {string} hashedPassword
-     * @returns {Promise<boolean>}
-     */
-    async function decryptAndReplaceHtml(hashedPassword) {
-        const { staticryptEncryptedMsgUniqueVariableName, staticryptSaltUniqueVariableName } = staticryptConfig;
-        const { replaceHtmlCallback } = templateConfig;
-
-        const result = await decode(
-            staticryptEncryptedMsgUniqueVariableName,
-            hashedPassword,
-            staticryptSaltUniqueVariableName
-        );
-        if (!result.success) {
-            return false;
-        }
-        const plainHTML = result.decoded;
-
-        // if the user configured a callback call it, otherwise just replace the whole HTML
-        if (typeof replaceHtmlCallback === "function") {
-            replaceHtmlCallback(plainHTML);
-        } else {
-            document.write(plainHTML);
-            document.close();
-        }
-
-        return true;
+    var hash = location.hash.replace('#', '');
+    if (hash) {
+      var found = tabs.filter(function (t) { return t.dataset.panel === 'p-' + hash; })[0];
+      if (found) activate(found.dataset.panel, false);
     }
 
-    /**
-     * Attempt to decrypt the page and replace the whole HTML.
-     *
-     * @param {string} password
-     * @param {boolean} isRememberChecked
-     *
-     * @returns {Promise<{isSuccessful: boolean, hashedPassword?: string}>} - we return an object, so that if we want to
-     *   expose more information in the future we can do it without breaking the password_template
-     */
-    async function handleDecryptionOfPage(password, isRememberChecked) {
-        const { staticryptSaltUniqueVariableName } = staticryptConfig;
+    window.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowDown' && e.key !== 'ArrowLeft' && e.key !== 'ArrowUp') return;
+      var i = tabs.findIndex(function (t) { return t.getAttribute('aria-selected') === 'true'; });
+      if (i < 0) return;
+      var fwd = (e.key === 'ArrowRight' || e.key === 'ArrowDown');
+      var n = fwd ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+      activate(tabs[n].dataset.panel, true);
+      tabs[n].focus();
+    });
+  })();
+</script>
 
-        // decrypt and replace the whole page
-        const hashedPassword = await cryptoEngine.hashPassword(password, staticryptSaltUniqueVariableName);
-        return handleDecryptionOfPageFromHash(hashedPassword, isRememberChecked);
-    }
-    exports.handleDecryptionOfPage = handleDecryptionOfPage;
-
-    async function handleDecryptionOfPageFromHash(hashedPassword, isRememberChecked) {
-        const { isRememberEnabled, rememberDurationInDays } = staticryptConfig;
-        const { rememberExpirationKey, rememberPassphraseKey } = templateConfig;
-
-        const isDecryptionSuccessful = await decryptAndReplaceHtml(hashedPassword);
-
-        if (!isDecryptionSuccessful) {
-            return {
-                isSuccessful: false,
-                hashedPassword,
-            };
-        }
-
-        // remember the hashedPassword and set its expiration if necessary
-        if (isRememberEnabled && isRememberChecked) {
-            window.localStorage.setItem(rememberPassphraseKey, hashedPassword);
-
-            // set the expiration if the duration isn't 0 (meaning no expiration)
-            if (rememberDurationInDays > 0) {
-                window.localStorage.setItem(
-                    rememberExpirationKey,
-                    (new Date().getTime() + rememberDurationInDays * 24 * 60 * 60 * 1000).toString()
-                );
-            }
-        }
-
-        return {
-            isSuccessful: true,
-            hashedPassword,
-        };
-    }
-    exports.handleDecryptionOfPageFromHash = handleDecryptionOfPageFromHash;
-
-    /**
-     * Clear localstorage from staticrypt related values
-     */
-    function clearLocalStorage() {
-        const { clearLocalStorageCallback, rememberExpirationKey, rememberPassphraseKey } = templateConfig;
-
-        if (typeof clearLocalStorageCallback === "function") {
-            clearLocalStorageCallback();
-        } else {
-            localStorage.removeItem(rememberPassphraseKey);
-            localStorage.removeItem(rememberExpirationKey);
-        }
-    }
-
-    async function handleDecryptOnLoad() {
-        let isSuccessful = await decryptOnLoadFromUrl();
-
-        if (!isSuccessful) {
-            isSuccessful = await decryptOnLoadFromRememberMe();
-        }
-
-        return { isSuccessful };
-    }
-    exports.handleDecryptOnLoad = handleDecryptOnLoad;
-
-    /**
-     * Clear storage if we are logging out
-     *
-     * @returns {boolean} - whether we logged out
-     */
-    function logoutIfNeeded() {
-        const logoutKey = "staticrypt_logout";
-
-        // handle logout through query param
-        const queryParams = new URLSearchParams(window.location.search);
-        if (queryParams.has(logoutKey)) {
-            clearLocalStorage();
-            return true;
-        }
-
-        // handle logout through URL fragment
-        const hash = window.location.hash.substring(1);
-        if (hash.includes(logoutKey)) {
-            clearLocalStorage();
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * To be called on load: check if we want to try to decrypt and replace the HTML with the decrypted content, and
-     * try to do it if needed.
-     *
-     * @returns {Promise<boolean>} true if we derypted and replaced the whole page, false otherwise
-     */
-    async function decryptOnLoadFromRememberMe() {
-        const { rememberDurationInDays } = staticryptConfig;
-        const { rememberExpirationKey, rememberPassphraseKey } = templateConfig;
-
-        // if we are login out, terminate
-        if (logoutIfNeeded()) {
-            return false;
-        }
-
-        // if there is expiration configured, check if we're not beyond the expiration
-        if (rememberDurationInDays && rememberDurationInDays > 0) {
-            const expiration = localStorage.getItem(rememberExpirationKey),
-                isExpired = expiration && new Date().getTime() > parseInt(expiration);
-
-            if (isExpired) {
-                clearLocalStorage();
-                return false;
-            }
-        }
-
-        const hashedPassword = localStorage.getItem(rememberPassphraseKey);
-
-        if (hashedPassword) {
-            // try to decrypt
-            const isDecryptionSuccessful = await decryptAndReplaceHtml(hashedPassword);
-
-            // if the decryption is unsuccessful the password might be wrong - silently clear the saved data and let
-            // the user fill the password form again
-            if (!isDecryptionSuccessful) {
-                clearLocalStorage();
-                return false;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    async function decryptOnLoadFromUrl() {
-        const passwordKey = "staticrypt_pwd";
-        const rememberMeKey = "remember_me";
-
-        // try to get the password from the query param (for backward compatibility - we now want to avoid this method,
-        // since it sends the hashed password to the server which isn't needed)
-        const queryParams = new URLSearchParams(window.location.search);
-        const hashedPasswordQuery = queryParams.get(passwordKey);
-        const rememberMeQuery = queryParams.get(rememberMeKey);
-
-        const urlFragment = window.location.hash.substring(1);
-        // get the password from the url fragment
-        const hashedPasswordRegexMatch = urlFragment.match(new RegExp(passwordKey + "=([^&]*)"));
-        const hashedPasswordFragment = hashedPasswordRegexMatch ? hashedPasswordRegexMatch[1] : null;
-        const rememberMeFragment = urlFragment.includes(rememberMeKey);
-
-        const hashedPassword = hashedPasswordFragment || hashedPasswordQuery;
-        const rememberMe = rememberMeFragment || rememberMeQuery;
-
-        if (hashedPassword) {
-            return handleDecryptionOfPageFromHash(hashedPassword, rememberMe);
-        }
-
-        return false;
-    }
-
-    return exports;
-}
-exports.init = init;
-
-  return exports;
-})());
-            const templateError = "Bad password!",
-                templateToggleAltShow = "Show password",
-                templateToggleAltHide = "Hide password",
-                isRememberEnabled = true,
+</body>
+</html>
